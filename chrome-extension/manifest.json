@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "English Buddy 🌸",
+  "name": "English Buddy",
   "description": "選択した英文をかわいく解説してくれる英語学習サポーター！日本語訳・文法・単語・別の言い方を一発表示",
   "version": "1.0.0",
   "permissions": ["contextMenus", "storage", "activeTab", "scripting"],
@@ -17,17 +17,7 @@
   ],
   "action": {
     "default_popup": "popup.html",
-    "default_title": "English Buddy 🌸 設定",
-    "default_icon": {
-      "16": "icons/icon16.svg",
-      "48": "icons/icon48.svg",
-      "128": "icons/icon128.svg"
-    }
-  },
-  "icons": {
-    "16": "icons/icon16.svg",
-    "48": "icons/icon48.svg",
-    "128": "icons/icon128.svg"
+    "default_title": "English Buddy 設定"
   },
   "commands": {
     "analyze-text": {
