@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>English Buddy 🌸 設定</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+
+  <!-- ヘッダー -->
+  <div class="p-header">
+    <div class="p-header-icon">🌸</div>
+    <h1>English Buddy</h1>
+    <p>英語学習サポーター</p>
+  </div>
+
+  <!-- メインコンテンツ -->
+  <div class="p-body">
+
+    <!-- APIキー設定 -->
+    <section class="p-card">
+      <label class="p-label" for="api-key">🔑 Gemini API キー</label>
+      <div class="p-input-row">
+        <input
+          type="password"
+          id="api-key"
+          class="p-input"
+          placeholder="AIza..."
+          autocomplete="off"
+          spellcheck="false"
+        />
+        <button id="toggle-vis" class="p-icon-btn" title="表示/非表示" aria-label="表示/非表示">
+          👁️
+        </button>
+      </div>
+      <p class="p-hint">
+        無料のAPIキーは
+        <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">
+          Google AI Studio
+        </a>
+        で取得できます（クレジットカード不要！）
+      </p>
+    </section>
+
+    <!-- キーボードショートカット -->
+    <section class="p-card">
+      <div class="p-card-title">⌨️ キーボードショートカット</div>
+      <div class="p-shortcut-display">
+        <span class="p-kbd">Ctrl</span>
+        <span class="p-plus">＋</span>
+        <span class="p-kbd">I</span>
+        <span class="p-kbd-mac">（Mac: ⌘ I）</span>
+      </div>
+      <p class="p-hint">
+        ショートカットを変更するには
+        <a id="open-shortcuts-link" href="#" class="p-link">
+          chrome://extensions/shortcuts
+        </a>
+        を開いてください。
+      </p>
+    </section>
+
+    <!-- 右クリックメニュー一覧 -->
+    <section class="p-card">
+      <div class="p-card-title">🖱️ 右クリックメニュー</div>
+      <ul class="p-menu-list">
+        <li>🌸 全部まとめて解説する</li>
+        <li>🇯🇵 日本語訳を見る</li>
+        <li>📚 文法を解説する</li>
+        <li>💡 単語を解説する</li>
+        <li>✨ 別の言い方を見る</li>
+      </ul>
+    </section>
+
+    <!-- 保存ボタン -->
+    <button id="save-btn" class="p-save-btn">
+      💾 保存する
+    </button>
+
+    <div id="status" class="p-status" aria-live="polite"></div>
+
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

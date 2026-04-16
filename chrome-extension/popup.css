@@ -1,0 +1,242 @@
+/* ============================================================
+   English Buddy 🌸 - ポップアップ（設定ページ）スタイル
+   ============================================================ */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  width: 300px;
+  background: #fff5f8;
+  font-family: -apple-system, 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', 'Yu Gothic UI', sans-serif;
+  font-size: 14px;
+  color: #4a3a5a;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ---------- ヘッダー ---------- */
+.p-header {
+  background: linear-gradient(135deg, #FFB7C5 0%, #E8D5F5 100%);
+  padding: 20px 16px 18px;
+  text-align: center;
+}
+
+.p-header-icon {
+  font-size: 36px;
+  line-height: 1;
+  margin-bottom: 6px;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-5px); }
+}
+
+.p-header h1 {
+  font-size: 20px;
+  font-weight: 900;
+  color: #7a2060;
+  letter-spacing: 0.5px;
+}
+
+.p-header p {
+  font-size: 12px;
+  color: #b070a0;
+  margin-top: 2px;
+}
+
+/* ---------- 本文エリア ---------- */
+.p-body {
+  padding: 14px 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ---------- カード ---------- */
+.p-card {
+  background: white;
+  border: 1.5px solid rgba(255, 183, 197, 0.55);
+  border-radius: 14px;
+  padding: 13px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  box-shadow: 0 2px 8px rgba(255, 183, 197, 0.15);
+}
+
+.p-card-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #c060a0;
+}
+
+/* ---------- APIキー入力 ---------- */
+.p-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: #7a4a6a;
+}
+
+.p-input-row {
+  display: flex;
+  gap: 6px;
+}
+
+.p-input {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1.5px solid #FFB7C5;
+  border-radius: 10px;
+  font-size: 13px;
+  background: #fff8fc;
+  color: #4a2060;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  font-family: monospace;
+}
+
+.p-input:focus {
+  border-color: #c060a0;
+  box-shadow: 0 0 0 3px rgba(192, 96, 160, 0.12);
+}
+
+.p-input::placeholder {
+  color: #cdb0c0;
+}
+
+.p-icon-btn {
+  background: white;
+  border: 1.5px solid #FFB7C5;
+  border-radius: 10px;
+  width: 38px;
+  flex-shrink: 0;
+  cursor: pointer;
+  font-size: 16px;
+  transition: border-color 0.2s, transform 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.p-icon-btn:hover {
+  border-color: #c060a0;
+  transform: scale(1.08);
+}
+
+.p-hint {
+  font-size: 11px;
+  color: #b090b0;
+  line-height: 1.55;
+}
+
+.p-hint a,
+.p-link {
+  color: #c060a0;
+  text-decoration: none;
+  font-weight: 600;
+}
+.p-hint a:hover,
+.p-link:hover {
+  text-decoration: underline;
+}
+
+/* ---------- ショートカット表示 ---------- */
+.p-shortcut-display {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.p-kbd {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(160deg, #FFD6E7, #E8D5F5);
+  color: #7a2060;
+  font-size: 13px;
+  font-weight: 800;
+  padding: 4px 12px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(255, 183, 197, 0.5);
+  letter-spacing: 0.3px;
+}
+
+.p-plus {
+  color: #c090b0;
+  font-size: 16px;
+  font-weight: 300;
+}
+
+.p-kbd-mac {
+  font-size: 12px;
+  color: #b090b0;
+  font-style: italic;
+}
+
+/* ---------- 右クリックメニューリスト ---------- */
+.p-menu-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.p-menu-list li {
+  font-size: 12px;
+  color: #7a5a8a;
+  padding: 5px 10px;
+  background: rgba(255, 183, 197, 0.1);
+  border-radius: 8px;
+  transition: background 0.15s;
+}
+
+.p-menu-list li:hover {
+  background: rgba(255, 183, 197, 0.22);
+}
+
+/* ---------- 保存ボタン ---------- */
+.p-save-btn {
+  all: unset;
+  display: block;
+  width: 100%;
+  text-align: center;
+  background: linear-gradient(135deg, #FFB7C5, #E8D5F5);
+  color: #7a2060;
+  font-size: 14px;
+  font-weight: 800;
+  padding: 13px;
+  border-radius: 14px;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(255, 183, 197, 0.45);
+  transition: transform 0.2s, box-shadow 0.2s;
+  letter-spacing: 0.3px;
+}
+
+.p-save-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 7px 20px rgba(255, 183, 197, 0.55);
+}
+
+.p-save-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 3px 8px rgba(255, 183, 197, 0.3);
+}
+
+/* ---------- ステータスメッセージ ---------- */
+.p-status {
+  text-align: center;
+  font-size: 13px;
+  font-weight: 700;
+  min-height: 22px;
+  transition: opacity 0.3s;
+}
+
+.p-status.success { color: #5aaa70; }
+.p-status.error   { color: #c04060; }
