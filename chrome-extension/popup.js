@@ -35,8 +35,8 @@ document.addEventListener('DOMContentLoaded', async () => {
       showStatus('🔑 APIキーを入力してください', 'error');
       return;
     }
-    if (!key.startsWith('sk-ant-')) {
-      showStatus('⚠️ 正しい Anthropic APIキーを入力してください', 'error');
+    if (!key.startsWith('AIza')) {
+      showStatus('⚠️ 正しい Gemini APIキーを入力してください', 'error');
       return;
     }
 

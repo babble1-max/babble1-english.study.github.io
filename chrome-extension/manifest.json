@@ -4,7 +4,7 @@
   "description": "選択した英文をかわいく解説してくれる英語学習サポーター！日本語訳・文法・単語・別の言い方を一発表示",
   "version": "1.0.0",
   "permissions": ["contextMenus", "storage", "activeTab", "scripting"],
-  "host_permissions": ["https://api.anthropic.com/*"],
+  "host_permissions": ["https://generativelanguage.googleapis.com/*"],
   "background": {
     "service_worker": "background.js"
   },

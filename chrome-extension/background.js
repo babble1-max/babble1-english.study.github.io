@@ -1,10 +1,9 @@
 // ============================================================
 // English Buddy 🌸 - Background Service Worker
-// コンテキストメニューの作成・キーボードショートカット処理・Claude API呼び出し
+// コンテキストメニューの作成・キーボードショートカット処理・Gemini API呼び出し
 // ============================================================
 
 chrome.runtime.onInstalled.addListener(() => {
-  // 右クリックメニューを作成
   const menus = [
     { id: 'eb-all',         title: '🌸 全部まとめて解説する' },
     { id: 'eb-sep1',        type: 'separator' },
@@ -50,7 +49,6 @@ chrome.commands.onCommand.addListener(async (command) => {
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
   if (!tab?.id) return;
 
-  // アクティブタブから選択テキストを取得
   let results;
   try {
     results = await chrome.scripting.executeScript({
@@ -86,7 +84,6 @@ async function processText(tabId, text, action) {
     return;
   }
 
-  // ローディング表示
   chrome.tabs.sendMessage(tabId, {
     type: 'SHOW_LOADING',
     text,
@@ -94,7 +91,7 @@ async function processText(tabId, text, action) {
   });
 
   try {
-    const analysis = await callClaudeAPI(apiKey, text, action);
+    const analysis = await callGeminiAPI(apiKey, text, action);
     chrome.tabs.sendMessage(tabId, {
       type: 'SHOW_RESULT',
       text,
@@ -109,17 +106,14 @@ async function processText(tabId, text, action) {
   }
 }
 
-// Claude API 呼び出し
-async function callClaudeAPI(apiKey, text, action) {
-  const systemPrompt =
-    'あなたは英語学習サポーターです。ユーザーが選択した英語テキストを解析し、日本語で分かりやすく解説してください。必ずJSONのみを返してください。前後に余分なテキストは不要です。';
-
+// Gemini API 呼び出し
+async function callGeminiAPI(apiKey, text, action) {
   const prompts = {
-    all: `以下の英語テキストについて全て解説してください。
+    all: `あなたは英語学習サポーターです。以下の英語テキストについて日本語で詳しく解説してください。
 
 テキスト: "${text}"
 
-以下のJSON形式のみ返してください:
+以下のJSON形式のみで返してください（前後に余分なテキスト不要）:
 {
   "translation": "自然な日本語訳",
   "grammar": "文法解説（文の構造・時制・品詞など）",
@@ -132,22 +126,22 @@ async function callClaudeAPI(apiKey, text, action) {
   "tips": "学習のポイントや豆知識"
 }`,
 
-    translate: `以下の英語テキストを日本語に翻訳してください。
+    translate: `あなたは英語学習サポーターです。以下の英語テキストを日本語に翻訳してください。
 
 テキスト: "${text}"
 
-以下のJSON形式のみ返してください:
+以下のJSON形式のみで返してください:
 {
   "translation": "自然な日本語訳",
   "literal": "直訳（参考）",
   "tips": "翻訳のポイント"
 }`,
 
-    grammar: `以下の英語テキストの文法を解説してください。
+    grammar: `あなたは英語学習サポーターです。以下の英語テキストの文法を日本語で解説してください。
 
 テキスト: "${text}"
 
-以下のJSON形式のみ返してください:
+以下のJSON形式のみで返してください:
 {
   "grammar": "文法の詳しい解説",
   "structure": "文の構造の説明",
@@ -155,11 +149,11 @@ async function callClaudeAPI(apiKey, text, action) {
   "tips": "学習のポイント"
 }`,
 
-    vocab: `以下の英語テキストの重要な単語・表現を解説してください。
+    vocab: `あなたは英語学習サポーターです。以下の英語テキストの重要な単語・表現を日本語で解説してください。
 
 テキスト: "${text}"
 
-以下のJSON形式のみ返してください:
+以下のJSON形式のみで返してください:
 {
   "vocabulary": [
     {"word": "単語/表現", "reading": "発音・読み方", "partOfSpeech": "品詞", "meaning": "意味", "example": "例文", "note": "補足"}
@@ -168,11 +162,11 @@ async function callClaudeAPI(apiKey, text, action) {
   "tips": "単語学習のポイント"
 }`,
 
-    alternative: `以下の英語テキストの別の言い方を教えてください。
+    alternative: `あなたは英語学習サポーターです。以下の英語テキストの別の言い方を日本語で教えてください。
 
 テキスト: "${text}"
 
-以下のJSON形式のみ返してください:
+以下のJSON形式のみで返してください:
 {
   "original_meaning": "元テキストの意味",
   "alternatives": [
@@ -182,18 +176,19 @@ async function callClaudeAPI(apiKey, text, action) {
 }`,
   };
 
-  const response = await fetch('https://api.anthropic.com/v1/messages', {
+  const prompt = prompts[action] ?? prompts.all;
+
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+  const response = await fetch(url, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'x-api-key': apiKey,
-      'anthropic-version': '2023-06-01',
-    },
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      model: 'claude-sonnet-4-6',
-      max_tokens: 2048,
-      system: systemPrompt,
-      messages: [{ role: 'user', content: prompts[action] ?? prompts.all }],
+      contents: [{ parts: [{ text: prompt }] }],
+      generationConfig: {
+        responseMimeType: 'application/json',
+        temperature: 0.3,
+      },
     }),
   });
 
@@ -204,9 +199,8 @@ async function callClaudeAPI(apiKey, text, action) {
   }
 
   const data = await response.json();
-  const rawText = data.content?.[0]?.text ?? '';
+  const rawText = data.candidates?.[0]?.content?.parts?.[0]?.text ?? '';
 
-  // JSON を抽出してパース
   const match = rawText.match(/\{[\s\S]*\}/);
   if (!match) throw new Error('レスポンスのJSON解析に失敗しました');
 
